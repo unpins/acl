@@ -23,6 +23,13 @@
       name = "acl";
       binName = "acl";
       linuxOnly = true; # POSIX.1e ACL xattr — nixpkgs meta.platforms is linux-only
+      # acl bakes its own $out/share/locale (autotools NLS localedir) into the
+      # binary. In the base multicall drv that's a self-ref (closure=1), but the
+      # man/alias unpinEmbedWrap copies the binary into a fresh store path, turning
+      # it into a cross-ref to the base → closure=2. The static binary ships no
+      # share/locale, so the path is a DEAD ref (translations already never load;
+      # graceful English fallback, unchanged). Scrub it to restore 0-ref.
+      removeReferences = [ "acl-multi-static" ];
       smoke = [ "--unpin-program=getfacl" "--version" ];
       smokePattern = "2\\.3";
       build = pkgs:
