@@ -49,5 +49,5 @@ The [Releases](https://github.com/unpins/acl/releases) page has standalone binar
 ## Build notes
 
 - **Platform:** Linux only (POSIX.1e ACL xattrs).
-- **Multicall:** the three tools are folded into one ELF via a source-level `main` → `<tool>_main` rename (`lib.cppRenameMulticall`), keeping a single copy of the shared `libacl.a`/`libmisc.a` and letting the package's own libtool link rule do the final static link.
-- **Man pages:** the section-1 pages are embedded; read with `unpin man acl getfacl`.
+- **Multicall:** the three tools are folded into one ELF by the `unpin-llvm` engine, which compiles the package to bitcode and links the three entry points into a single module, keeping one copy of the shared `libacl.a`/`libmisc.a`.
+- **Man pages:** the three program pages and `acl.5` are embedded; read with `unpin man acl getfacl`. The `libacl` C API pages are not — this binary ships the programs, not a linkable library.

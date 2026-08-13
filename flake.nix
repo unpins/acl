@@ -17,10 +17,12 @@
     unpins-lib.lib.mkStandaloneFlake {
       inherit self;
       name = "acl";
-      binName = "acl";
       linuxOnly = true;
       smoke = [ "--unpin-program=getfacl" "--version" ];
-      smokePattern = "2\\.3";
+      # Anchored on the program name: the point of this smoke is that
+      # --unpin-program=getfacl selects getfacl, and a bare version number
+      # matches setfacl's output just as well.
+      smokePattern = "^getfacl 2\\.3";
 
       engine = "unpin-llvm";
       multicall = {
@@ -31,6 +33,15 @@
         ];
       };
 
-      build = pkgs: pkgs.pkgsStatic.acl;
+      # The man output carries 39 section-3 pages for the libacl C API — 55 KB
+      # of the shipped binary documenting an interface it does not expose (we
+      # ship the three programs, not a linkable library). embedMan harvests the
+      # whole man output, so prune at the source. man1 and acl.5 stay: the
+      # format page is what setfacl/getfacl arguments are written against.
+      build = pkgs: pkgs.pkgsStatic.acl.overrideAttrs (old: {
+        postInstall = (old.postInstall or "") + ''
+          rm -rf "$man/share/man/man3"
+        '';
+      });
     };
 }
