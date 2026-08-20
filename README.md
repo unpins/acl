@@ -1,6 +1,6 @@
 # acl
 
-[acl](https://savannah.nongnu.org/projects/acl/) — the POSIX.1e Access Control List utilities: `getfacl`, `setfacl` and `chacl`. A single self-contained binary.
+[acl](https://savannah.nongnu.org/projects/acl/) — the POSIX.1e Access Control List programs: `getfacl`, `setfacl` and `chacl`. A single self-contained binary, built natively for Linux.
 
 [![CI](https://github.com/unpins/acl/actions/workflows/acl.yml/badge.svg)](https://github.com/unpins/acl/actions)
 ![Linux](https://img.shields.io/badge/Linux-✓-success?logo=linux&logoColor=white)
