@@ -14,9 +14,9 @@ Linux-only: the tools read and write POSIX.1e ACLs through the Linux extended-at
 Run a program with [unpin](https://github.com/unpins/unpin):
 
 ```bash
-unpin acl getfacl file                      # show a file's ACL
-unpin acl setfacl -m u:alice:rw file        # grant alice read/write
-unpin acl setfacl -x u:alice file           # remove alice's entry
+unpin acl --unpin-program=getfacl file                    # show a file's ACL
+unpin acl --unpin-program=setfacl -m u:alice:rw file      # grant alice read/write
+unpin acl --unpin-program=setfacl -x u:alice file         # remove alice's entry
 ```
 
 To install the programs onto your PATH:
@@ -25,7 +25,7 @@ To install the programs onto your PATH:
 unpin install acl
 ```
 
-`unpin install acl` creates `getfacl`, `setfacl` and `chacl`. `unpin info acl` lists every command.
+`unpin install acl` creates `getfacl`, `setfacl` and `chacl`, and once they are on your PATH you can call them by name — `getfacl file`. `unpin info acl` lists every command.
 
 ## Build locally
 

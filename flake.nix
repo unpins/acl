@@ -39,6 +39,16 @@
       # whole man output, so prune at the source. man1 and acl.5 stay: the
       # format page is what setfacl/getfacl arguments are written against.
       build = pkgs: pkgs.pkgsStatic.acl.overrideAttrs (old: {
+        # gettext bakes the build's own prefix in as LOCALEDIR, so the nine
+        # translations these tools carry are looked up under a `/nix/store/...`
+        # path that exists on no user's machine — dead weight and a dead
+        # reference. Point the lookup at the conventional location (upstream's
+        # own default under prefix=/usr) and keep installing the catalogs under
+        # $out. Nix never saw the string: under the engine the fold's inputs are
+        # the module archives, not acl's `out`, so `--references` reports
+        # nothing and only a `strings` of the binary finds it.
+        configureFlags = (old.configureFlags or [ ]) ++ [ "--localedir=/usr/share/locale" ];
+        installFlags = (old.installFlags or [ ]) ++ [ "localedir=${placeholder "out"}/share/locale" ];
         postInstall = (old.postInstall or "") + ''
           rm -rf "$man/share/man/man3"
         '';
