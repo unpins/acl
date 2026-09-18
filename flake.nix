@@ -22,7 +22,7 @@
       # Anchored on the program name: the point of this smoke is that
       # --unpin-program=getfacl selects getfacl, and a bare version number
       # matches setfacl's output just as well.
-      smokePattern = "^getfacl 2\\.3";
+      smokePattern = "^getfacl [0-9]+\\.[0-9]+";
 
       engine = "unpin-llvm";
       multicall = {
