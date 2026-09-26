@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [2.4.0-1] - 2026-09-26
+
 First release of acl in the unpins catalog: `getfacl`, `setfacl` and `chacl`
 in one self-contained binary, built natively for Linux.
 
