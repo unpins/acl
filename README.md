@@ -7,7 +7,7 @@
 
 Part of the [unpins](https://unpins.org) catalog; install it with [`unpin`](https://github.com/unpins/unpin): `unpin install acl`.
 
-Linux-only: the tools read and write POSIX.1e ACLs through the Linux extended-attribute interface (`system.posix_acl_*` xattrs), which macOS and Windows do not provide.
+Linux-only: the programs read and write POSIX.1e ACLs through the Linux extended-attribute interface (`system.posix_acl_*` xattrs), which macOS and Windows do not provide.
 
 ## Usage
 
