@@ -33,9 +33,9 @@
         ];
       };
 
-      # The man output carries 39 section-3 pages for the libacl C API — 55 KB
-      # of the shipped binary documenting an interface it does not expose (we
-      # ship the three programs, not a linkable library). embedMan harvests the
+      # The man output carries the section-3 pages for the libacl C API,
+      # documenting an interface the binary does not expose (we ship the
+      # three programs, not a linkable library). embedMan harvests the
       # whole man output, so prune at the source. man1 and acl.5 stay: the
       # format page is what setfacl/getfacl arguments are written against.
       build = pkgs: pkgs.pkgsStatic.acl.overrideAttrs (old: {

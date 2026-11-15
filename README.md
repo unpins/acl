@@ -50,3 +50,4 @@ The [Releases](https://github.com/unpins/acl/releases) page has standalone binar
 
 - **Platform:** Linux only (POSIX.1e ACL xattrs).
 - **Man pages:** the three program pages and `acl.5` are embedded; read with `unpin man acl getfacl`. The `libacl` C API pages are not — this binary ships the programs, not a linkable library.
+- **Tests:** acl's test suite runs on native builds (0 failures under static-musl; five tests that need system users, setuid or root-named ACLs, which the build sandbox lacks, are left out) and is skipped on cross targets the build host can't execute.

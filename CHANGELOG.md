@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Upstream's test suite now runs on every native build, so a regression in
+  `getfacl`/`setfacl` fails the build instead of shipping. Five tests the build
+  sandbox cannot host are left out (they need system users, setuid or ACLs
+  naming root).
+
 ## [2.4.0-1] - 2026-09-26
 
 First release of acl in the unpins catalog: `getfacl`, `setfacl` and `chacl`
