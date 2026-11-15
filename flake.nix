@@ -39,6 +39,17 @@
       # whole man output, so prune at the source. man1 and acl.5 stay: the
       # format page is what setfacl/getfacl arguments are written against.
       build = pkgs: pkgs.pkgsStatic.acl.overrideAttrs (old: {
+        # Upstream's suite, minus five tests the build sandbox cannot host:
+        # cp, misc and setfacl-X need the users `bin`/`daemon`, which upstream
+        # supplies through an LD_PRELOAD shim a static binary ignores, and ACLs
+        # naming root (unsupported in the sandbox); sbits-restore needs setuid;
+        # restore expects glibc's ELOOP text, musl says "Symbolic link loop".
+        doCheck = pkgs.stdenv.buildPlatform.canExecute pkgs.stdenv.hostPlatform;
+        nativeCheckInputs = [ pkgs.buildPackages.perl ];
+        preCheck = ''
+          patchShebangs test
+          checkFlagsArray+=("TESTS=test/getfacl-lfs.run test/getfacl-noacl.run test/getfacl-recursive.run test/malformed-restore.run test/utf8-filenames.run test/root/getfacl.run test/root/permissions.run test/root/restore.run test/root/setfacl.run")
+        '';
         # gettext bakes the build's own prefix in as LOCALEDIR, so the nine
         # translations these tools carry are looked up under a `/nix/store/...`
         # path that exists on no user's machine — dead weight and a dead
